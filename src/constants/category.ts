@@ -1,0 +1,128 @@
+export const categories = [
+	{
+		name: "Food & Beverages",
+		subcategories: [
+			{ name: "Bar, cafe" },
+			{ name: "Groceries" },
+			{ name: "Restaurant, fast-food" },
+		],
+	},
+	{
+		name: "Shopping",
+		subcategories: [
+			{ name: "Clothes & Footwear" },
+			{ name: "Drug-store, chemist" },
+			{ name: "Electronics, accessories" },
+			{ name: "Gifts, joy" },
+			{ name: "Health and beauty" },
+			{ name: "Home, garden" },
+			{ name: "Jewels, accessories" },
+			{ name: "Kids" },
+			{ name: "Leisure time" },
+			{ name: "Pets, animals" },
+			{ name: "Stationery, tools" },
+			{ name: "HideEditAdd subcategory" },
+		],
+	},
+	{
+		name: "Housing",
+		subcategories: [
+			{ name: "Energy, utilities" },
+			{ name: "Maintenance, repairs" },
+			{ name: "Mortgage" },
+			{ name: "Property insurance" },
+			{ name: "Rent" },
+			{ name: "Services" },
+		],
+	},
+	{
+		name: "Transportation",
+		subcategories: [
+			{ name: "Business trips" },
+			{ name: "Long distance" },
+			{ name: "Public transport" },
+			{ name: "Taxi" },
+		],
+	},
+
+	{
+		name: "Vehicle",
+		subcategories: [
+			{ name: "Fuel" },
+			{ name: "Leasing" },
+			{ name: "Parking" },
+			{ name: "Rentals" },
+			{ name: "Vehicle insurance" },
+			{ name: "Vehicle maintenance" },
+		],
+	},
+	{
+		name: "Life & Entertainment",
+		subcategories: [
+			{ name: "Active sport, fitness" },
+			{ name: "Alcohol, tobacco" },
+			{ name: "Books, audio, subscriptions" },
+			{ name: "Charity, gifts" },
+			{ name: "Culture, sport events" },
+			{ name: "Education, development" },
+			{ name: "Health care, doctor" },
+			{ name: "Hobbies" },
+			{ name: "Holiday, trips, hotels" },
+			{ name: "Life events" },
+			{ name: "Lottery, gambling" },
+			{ name: "TV, Streaming" },
+			{ name: "Wellness, beauty" },
+		],
+	},
+	{
+		name: "Communication, PC",
+		subcategories: [
+			{ name: "Internet" },
+			{ name: "Postal services" },
+			{ name: "Software, apps, games" },
+			{ name: "Telephony, mobile phone" },
+		],
+	},
+	{
+		name: "Financial expenses",
+		subcategories: [
+			{ name: "Advisory" },
+			{ name: "Charges, Fees" },
+			{ name: "Child Support" },
+			{ name: "Fines" },
+			{ name: "Insurances" },
+			{ name: "Loans, interests" },
+			{ name: "Taxes" },
+		],
+	},
+	{
+		name: "Investments",
+		subcategories: [
+			{ name: "Collections" },
+			{ name: "Financial investments" },
+			{ name: "Realty" },
+			{ name: "Savings" },
+			{ name: "Vehicles, chattels" },
+		],
+	},
+	{
+		name: "Income",
+		subcategories: [
+			{ name: "Checks, coupons" },
+			{ name: "Child Support" },
+			{ name: "Dues & grants" },
+			{ name: "Gifts" },
+			{ name: "Interests, dividends" },
+			{ name: "Lending, renting" },
+			{ name: "Lottery, gambling" },
+			{ name: "Refunds (tax, purchase)" },
+			{ name: "Rental income" },
+			{ name: "Sale" },
+			{ name: "Wage, invoices" },
+		],
+	},
+	{
+		name: "Others",
+		subcategories: [{ name: "Missing" }],
+	},
+];

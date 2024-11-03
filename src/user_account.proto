@@ -1,0 +1,44 @@
+package budgetbakers;
+syntax = 'proto3';
+  
+message UserAccount {
+    message Database {
+        string name = 1;
+        string host = 2;
+        string user = 3;
+        string password = 4;
+    }
+
+    message UserMember {
+        Member member = 1;
+    }
+
+    message UnregisteredUserMember {
+        string email = 1;
+    }
+
+    message Member {
+        string id = 1;
+        string name = 2;
+        string email = 3;
+        string profilePicture = 5;
+    }
+
+    message Group {
+        string id = 1;
+        string name = 4;
+        Database database = 9;
+        UserMember owner = 5;
+        repeated UserMember members = 6;
+        repeated UnregisteredUserMember unregisteredMembers = 7;
+    }
+
+    string id = 1;
+    string firstName = 4;
+    string lastName = 5;
+    string name = 6;
+    string email = 7;
+    Database database = 15;
+    repeated Group groups = 31;
+   
+}

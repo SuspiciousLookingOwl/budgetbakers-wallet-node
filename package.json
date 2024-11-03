@@ -1,0 +1,39 @@
+{
+  "name": "budgetbakers-wallet",
+  "version": "0.0.1",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/typings/index.d.ts",
+  "scripts": {
+    "build": "pnpm clean && pnpm build:cjs && pnpm build:esm && pnpm build:types",
+    "build:cjs": "tsc -p ./typescript/tsconfig.cjs.json",
+    "build:esm": "tsc -p ./typescript/tsconfig.esm.json",
+    "build:types": "tsc -p ./typescript/tsconfig.types.json",
+    "clean": "rimraf ./dist",
+    "lint:check": "eslint src && prettier -c src tests",
+    "lint:fix": "eslint --fix && prettier --write src tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "nano": "^10.1.4",
+    "node-fetch": "^2.7.0",
+    "protobufjs": "^7.4.0",
+    "uuid": "^11.0.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.14.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/lodash": "^4.17.13",
+    "@types/node": "^22.8.6",
+    "@types/node-fetch": "^2.6.11",
+    "eslint": "^9.14.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.11.0",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "typescript-eslint": "^8.12.2"
+  }
+}
