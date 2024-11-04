@@ -21,7 +21,6 @@ export class Account extends Document implements AccountProps {
 	public color!: string;
 	public accountType!: number;
 	public gps!: boolean;
-	public reservedOwnerId!: string;
 	public archived!: boolean;
 	public excludeFromStats!: boolean;
 	public name!: string;

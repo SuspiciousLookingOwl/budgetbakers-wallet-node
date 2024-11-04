@@ -12,7 +12,6 @@ export type CurrencyProps = DocumentProps & {
 export class Currency extends Document implements CurrencyProps {
 	public code!: string;
 	public ratioToReferential!: number;
-	public reservedAuthorId!: string;
 	public referential!: boolean;
 	public position!: number;
 	public reservedModelType = "Currency" as const;
