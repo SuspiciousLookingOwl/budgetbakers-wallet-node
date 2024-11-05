@@ -1,6 +1,7 @@
-import { Document } from "./Document";
+import { Document, DocumentProps } from "./Document";
+import { HashTag } from "./HashTag";
 
-export type TemplateProps = {
+export type TemplateProps = DocumentProps & {
 	note: string;
 	amount: number;
 	type: number;
@@ -14,11 +15,11 @@ export type TemplateProps = {
 	reservedModelType: "Template";
 };
 
-export class Template extends Document implements TemplateProps {
+export class Template extends Document {
 	public note!: string;
 	public amount!: number;
 	public type!: number;
-	public labels!: string[];
+	public labelIds!: string[];
 	public paymentType!: number;
 	public accountId!: string;
 	public name!: string;
@@ -27,8 +28,16 @@ export class Template extends Document implements TemplateProps {
 	public categoryId!: string;
 	public reservedModelType = "Template" as const;
 
-	constructor(props: Template) {
+	constructor(props: TemplateProps) {
 		super(props);
-		Object.assign(this, { ...props });
+		const { labels, ...rest } = props;
+		Object.assign(this, { ...rest });
+
+		this.labelIds = labels;
+		this.amount = props.amount / 100;
+	}
+
+	public get labels(): HashTag[] {
+		return this.labelIds.map((id) => this.wallet.getHashTag(id)!);
 	}
 }

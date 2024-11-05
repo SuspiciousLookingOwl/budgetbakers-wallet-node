@@ -9,14 +9,14 @@ export type CurrencyProps = DocumentProps & {
 	reservedModelType: "Currency";
 };
 
-export class Currency extends Document implements CurrencyProps {
+export class Currency extends Document {
 	public code!: string;
 	public ratioToReferential!: number;
 	public referential!: boolean;
 	public position!: number;
 	public reservedModelType = "Currency" as const;
 
-	constructor(props: Currency) {
+	constructor(props: CurrencyProps) {
 		super(props);
 		Object.assign(this, { ...props });
 	}

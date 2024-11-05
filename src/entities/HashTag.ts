@@ -9,7 +9,7 @@ export type HashTagProps = DocumentProps & {
 	reservedModelType: "HashTag";
 };
 
-export class HashTag extends Document implements HashTagProps {
+export class HashTag extends Document {
 	public color!: string;
 	public archived!: boolean;
 	public autoAssign!: boolean;
@@ -17,7 +17,7 @@ export class HashTag extends Document implements HashTagProps {
 	public position!: number;
 	public reservedModelType = "HashTag" as const;
 
-	constructor(props: HashTag) {
+	constructor(props: HashTagProps) {
 		super(props);
 		Object.assign(this, { ...props });
 	}

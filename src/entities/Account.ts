@@ -1,7 +1,7 @@
 import { Currency } from "./Currency";
 import { Document, DocumentProps } from "./Document";
 
-type AccountProps = DocumentProps & {
+export type AccountProps = DocumentProps & {
 	color: string;
 	accountType: number;
 	gps: boolean;
@@ -22,7 +22,7 @@ type AccountProps = DocumentProps & {
 	};
 };
 
-export class Account extends Document implements AccountProps {
+export class Account extends Document {
 	public color!: string;
 	public accountType!: number;
 	public gps!: boolean;
@@ -39,6 +39,8 @@ export class Account extends Document implements AccountProps {
 	constructor(props: AccountProps) {
 		super(props);
 		Object.assign(this, { ...props });
+		this.initAmount = this.initAmount / 100;
+		this.initRefAmount = this.initRefAmount / 100;
 	}
 
 	get currency(): Currency {

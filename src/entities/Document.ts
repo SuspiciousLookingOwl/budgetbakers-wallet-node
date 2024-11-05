@@ -11,7 +11,7 @@ export type DocumentProps = {
 	reservedAuthorId: string;
 };
 
-export class Document implements DocumentProps {
+export class Document {
 	public wallet!: Wallet;
 	public _id!: string;
 	public _rev!: string;

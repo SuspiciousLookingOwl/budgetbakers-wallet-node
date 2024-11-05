@@ -1,6 +1,15 @@
 import nano, { DocumentResponseRow, DocumentScope, ServerScope } from "nano";
 
-import { Account, Category, Currency, Document, DocumentType, Record, Template } from ".";
+import {
+	Account,
+	Category,
+	Currency,
+	Document,
+	DocumentType,
+	DocumentTypeProps,
+	Record,
+	Template,
+} from ".";
 import { Client } from "../Client";
 import { IWalletGroup } from "../types";
 import { HashTag } from "./HashTag";
@@ -11,10 +20,11 @@ export class Wallet {
 	private active = false;
 	private currentSequence = 0;
 	private docs = new Map<string, DocumentType>();
-	private nano: ServerScope | null = null;
-	private db: DocumentScope<unknown> | null = null;
+	public rawDocs = new Map<string, DocumentTypeProps>();
+	private nano: ServerScope;
+	private db: DocumentScope<unknown>;
 
-	constructor(client: Client, { database, id }: IWalletGroup) {
+	constructor(client: Client, { id, database }: IWalletGroup) {
 		this.id = id;
 		this.client = client;
 
@@ -34,7 +44,7 @@ export class Wallet {
 	}
 
 	private async fetchLastData(poll = false): Promise<DocumentResponseRow<unknown>[]> {
-		if (!this.db) return [];
+		if (!this.db || !this.nano) return [];
 
 		const limit = 1000;
 
@@ -47,12 +57,11 @@ export class Wallet {
 
 		this.currentSequence = changes.last_seq;
 		const keysToDelete = changes.results.filter((r) => r.deleted).map((r) => r.id);
-		const keysToFetch = changes.results.filter((r) => !r.deleted).map((r) => r.id);
-
+		const keysToList = changes.results.filter((r) => !r.deleted).map((r) => r.id);
 		const { rows } = await this.db.list({
 			include_docs: true,
 			conflicts: true,
-			keys: keysToFetch,
+			keys: keysToList,
 		});
 
 		const objectModels = {
@@ -67,7 +76,8 @@ export class Wallet {
 		for (const row of rows) {
 			if (!row.doc || !("reservedModelType" in row.doc)) continue; // not a valid document
 
-			const rawDoc = row.doc as DocumentType;
+			const rawDoc = row.doc as DocumentTypeProps;
+			this.rawDocs.set(row.key, rawDoc);
 			const Model = objectModels[rawDoc.reservedModelType] as unknown as typeof Document;
 
 			if (Model) {
@@ -80,6 +90,7 @@ export class Wallet {
 		}
 
 		for (const key of keysToDelete) {
+			this.rawDocs.delete(key);
 			this.docs.delete(key);
 		}
 

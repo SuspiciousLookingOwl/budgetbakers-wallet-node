@@ -12,7 +12,7 @@ export type CategoryProps = DocumentProps & {
 	reservedModelType: "Category";
 };
 
-export class Category extends Document implements CategoryProps {
+export class Category extends Document {
 	public customCategory!: boolean;
 	public color!: string;
 	public customName!: boolean;

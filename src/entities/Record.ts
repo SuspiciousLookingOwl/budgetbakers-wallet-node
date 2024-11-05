@@ -36,7 +36,7 @@ type Photo = {
 	url: string;
 };
 
-export class Record extends Document implements RecordProps {
+export class Record extends Document {
 	public note!: string;
 	public latitude!: number;
 	public accuracy!: number;
@@ -51,7 +51,7 @@ export class Record extends Document implements RecordProps {
 	public refAmount!: number;
 	public amount!: number;
 	public suggestedEnvelopeId!: number;
-	public labels!: string[];
+	public labelIds!: string[];
 	public accountId!: string;
 	public transfer!: boolean;
 	public transferAccountId?: string;
@@ -63,7 +63,12 @@ export class Record extends Document implements RecordProps {
 
 	constructor(props: RecordProps) {
 		super(props);
-		Object.assign(this, { ...props });
+		const { labels, ...rest } = props;
+		Object.assign(this, { ...rest });
+
+		this.labelIds = labels;
+		this.amount = this.amount / 100;
+		this.refAmount = this.refAmount / 100;
 	}
 
 	public get account(): Account {
@@ -82,8 +87,8 @@ export class Record extends Document implements RecordProps {
 		return this.wallet.getCategory(this.categoryId)!;
 	}
 
-	public get hashtags(): HashTag[] {
-		return this.labels.map((label) => this.wallet.getHashTag(label)!);
+	public get labels(): HashTag[] {
+		return this.labelIds.map((id) => this.wallet.getHashTag(id)!);
 	}
 
 	public amountInCurrency(currency: Currency | string): number {
