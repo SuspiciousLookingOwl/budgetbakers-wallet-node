@@ -22,6 +22,13 @@ export class Document {
 	public reservedAuthorId!: string;
 
 	constructor(props: DocumentProps) {
-		Object.assign(this, { ...props });
+		this.wallet = props.wallet;
+		this._id = props._id;
+		this._rev = props._rev;
+		this.reservedUpdatedAt = props.reservedUpdatedAt;
+		this.reservedOwnerId = props.reservedOwnerId;
+		this.reservedSource = props.reservedSource;
+		this.reservedCreatedAt = props.reservedCreatedAt;
+		this.reservedAuthorId = props.reservedAuthorId;
 	}
 }
