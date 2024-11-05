@@ -15,6 +15,11 @@ type AccountProps = DocumentProps & {
 	locked: boolean;
 	initRefAmount: number;
 	reservedModelType: "Account";
+	creditCard?: {
+		limit: number;
+		dueDay: number;
+		balanceDisplayOption: number;
+	};
 };
 
 export class Account extends Document implements AccountProps {
