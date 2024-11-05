@@ -157,7 +157,7 @@ export class Wallet {
 	public get records(): Record[] {
 		const records = [...this.docs.values()]
 			.filter((d) => d.reservedModelType === "Record")
-			.sort((a, b) => b.recordDate.localeCompare(a.recordDate));
+			.sort((a, b) => b.recordDate.toISOString().localeCompare(a.recordDate.toISOString()));
 		return records;
 	}
 

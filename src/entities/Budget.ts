@@ -39,10 +39,17 @@ export interface BudgetNotification {
 	riskOverspendingEnabled: boolean;
 }
 
+export enum BudgetType {
+	WEEK = 0,
+	MONTH = 1,
+	YEAR = 2,
+	ONE_TIME = 4,
+}
+
 export class Budget extends Document {
 	amount!: number;
 	changes!: BudgetChange[];
-	type!: number;
+	type!: BudgetType;
 	contactIds!: string[];
 	labelIds!: string[];
 	reservedOwnerId!: string;
@@ -54,14 +61,14 @@ export class Budget extends Document {
 	currencyId!: string;
 	envelopes!: number[];
 	notifications!: BudgetNotification;
-	startDate?: string;
-	endDate?: string;
+	startDate?: Date;
+	endDate?: Date;
 	reservedModelType = "Budget" as const;
 
 	constructor(props: BudgetProps) {
 		super(props);
 
-		const { labels, ...rest } = props;
+		const { labels, startDate, endDate, ...rest } = props;
 		Object.assign(this, { ...rest });
 
 		this.amount = props.amount / 100;
@@ -70,6 +77,8 @@ export class Budget extends Document {
 			date: c.date,
 		}));
 		this.labelIds = labels;
+		this.startDate = startDate ? new Date(startDate) : undefined;
+		this.endDate = endDate ? new Date(endDate) : undefined;
 	}
 
 	public get account(): Account[] {

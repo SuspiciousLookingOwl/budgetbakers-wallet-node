@@ -9,7 +9,7 @@ export type RecordProps = DocumentProps & {
 	latitude: number;
 	accuracy: number;
 	type: number;
-	photos: Photo[];
+	photos: PhotoProps[];
 	paymentType: number;
 	warrantyInMonth: number;
 	recordDate: string;
@@ -30,9 +30,15 @@ export type RecordProps = DocumentProps & {
 	reservedModelType: "Record";
 };
 
-type Photo = {
+type PhotoProps = {
 	backedInCloud: boolean;
 	cratedAt: string;
+	url: string;
+};
+
+type Photo = {
+	backedInCloud: boolean;
+	createdAt: Date;
 	url: string;
 };
 
@@ -44,7 +50,7 @@ export class Record extends Document {
 	public photos!: Photo[];
 	public paymentType!: number;
 	public warrantyInMonth!: number;
-	public recordDate!: string;
+	public recordDate!: Date;
 	public currencyId!: string;
 	public recordState!: number;
 	public longitude!: number;
@@ -63,12 +69,17 @@ export class Record extends Document {
 
 	constructor(props: RecordProps) {
 		super(props);
-		const { labels, ...rest } = props;
+		const { labels, recordDate, photos, ...rest } = props;
 		Object.assign(this, { ...rest });
 
 		this.labelIds = labels;
 		this.amount = this.amount / 100;
 		this.refAmount = this.refAmount / 100;
+		this.recordDate = new Date(recordDate);
+		this.photos = photos.map((photo) => ({
+			...photo,
+			createdAt: new Date(photo.cratedAt),
+		}));
 	}
 
 	public get account(): Account {
