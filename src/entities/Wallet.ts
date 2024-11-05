@@ -2,6 +2,7 @@ import nano, { DocumentResponseRow, DocumentScope, ServerScope } from "nano";
 
 import {
 	Account,
+	Budget,
 	Category,
 	Currency,
 	Document,
@@ -66,6 +67,7 @@ export class Wallet {
 
 		const objectModels = {
 			Account,
+			Budget,
 			Category,
 			Currency,
 			Record,
