@@ -1,4 +1,4 @@
-import nano, { DocumentResponseRow, DocumentScope, ServerScope } from "nano";
+import nano, { DocumentScope, ServerScope } from "nano";
 
 import {
 	Account,
@@ -8,11 +8,13 @@ import {
 	Document,
 	DocumentType,
 	DocumentTypeProps,
-	Record,
+	RecordEntry,
 	Template,
 } from ".";
 import { Client } from "../Client";
+import { ENVELOPES } from "../constants";
 import { IWalletGroup } from "../types";
+import { Envelope } from "./Envelope";
 import { HashTag } from "./HashTag";
 
 export class Wallet {
@@ -44,8 +46,8 @@ export class Wallet {
 		await this.fetchLastData();
 	}
 
-	private async fetchLastData(poll = false): Promise<DocumentResponseRow<unknown>[]> {
-		if (!this.db || !this.nano) return [];
+	private async fetchLastData(poll = false): Promise<void> {
+		if (!this.db || !this.nano) return;
 
 		const limit = 1000;
 
@@ -59,9 +61,7 @@ export class Wallet {
 		this.currentSequence = changes.last_seq;
 		const keysToDelete = changes.results.filter((r) => r.deleted).map((r) => r.id);
 		const keysToList = changes.results.filter((r) => !r.deleted).map((r) => r.id);
-		const { rows } = await this.db.list({
-			include_docs: true,
-			conflicts: true,
+		const { rows } = await this.db.fetch({
 			keys: keysToList,
 		});
 
@@ -70,13 +70,13 @@ export class Wallet {
 			Budget,
 			Category,
 			Currency,
-			Record,
+			Record: RecordEntry,
 			Template,
 			HashTag,
 		} as const;
 
 		for (const row of rows) {
-			if (!row.doc || !("reservedModelType" in row.doc)) continue; // not a valid document
+			if ("error" in row || !row.doc || !("reservedModelType" in row.doc)) continue; // not a valid document
 
 			const rawDoc = row.doc as DocumentTypeProps;
 			this.rawDocs.set(row.key, rawDoc);
@@ -95,8 +95,6 @@ export class Wallet {
 			this.rawDocs.delete(key);
 			this.docs.delete(key);
 		}
-
-		return rows;
 	}
 
 	public async startPolling() {
@@ -117,7 +115,7 @@ export class Wallet {
 
 	public getAccount(id: string): Account | null {
 		const doc = this.docs.get(id) as DocumentType;
-		return doc.reservedModelType === "Account" ? doc : null;
+		return doc?.reservedModelType === "Account" ? doc : null;
 	}
 
 	public get accounts(): Account[] {
@@ -132,7 +130,7 @@ export class Wallet {
 
 	public getCurrency(id: string): Currency | null {
 		const doc = this.docs.get(id) as DocumentType;
-		return doc.reservedModelType === "Currency" ? doc : null;
+		return doc?.reservedModelType === "Currency" ? doc : null;
 	}
 
 	public get currencies(): Currency[] {
@@ -144,7 +142,7 @@ export class Wallet {
 
 	public getCategory(id: string): Category | null {
 		const doc = this.docs.get(id) as DocumentType;
-		return doc.reservedModelType === "Category" ? doc : null;
+		return doc?.reservedModelType === "Category" ? doc : null;
 	}
 
 	public get categories(): Category[] {
@@ -154,7 +152,53 @@ export class Wallet {
 		return categories;
 	}
 
-	public get records(): Record[] {
+	public get envelopes(): Envelope[] {
+		const envelopes = Object.values(ENVELOPES).map((e) => {
+			const category = this.categories.find((c) => c.envelopeId === e.id) || null;
+			return new Envelope({
+				id: e.id,
+				name: e.name,
+				customCategory: false,
+				parentId: e.parentId,
+				color: e.color,
+				category,
+			});
+		});
+
+		for (const envelope of envelopes) {
+			const children = envelopes.filter((e) => e.parentId === envelope.id);
+			if (children.length) {
+				envelope.children = children;
+			}
+		}
+
+		const customCategories = this.categories.filter((c) => c.customCategory);
+		for (const category of customCategories) {
+			const parent = envelopes.find((e) => e.id === category.envelopeId);
+
+			if (!parent) continue;
+			const envelope = new Envelope({
+				id: parent.id,
+				customCategory: true,
+				name: category.name,
+				color: category.color,
+				parentId: parent.id,
+				category,
+			});
+			envelopes.push(envelope);
+
+			if (!parent.children) parent.children = [];
+			parent.children.push(envelope);
+		}
+
+		return envelopes;
+	}
+
+	public get envelopeTree(): Envelope[] {
+		return this.envelopes.filter((e) => !e.parentId);
+	}
+
+	public get records(): RecordEntry[] {
 		const records = [...this.docs.values()]
 			.filter((d) => d.reservedModelType === "Record")
 			.sort((a, b) => b.recordDate.toISOString().localeCompare(a.recordDate.toISOString()));
@@ -162,9 +206,7 @@ export class Wallet {
 	}
 
 	public getHashTag(id: string): HashTag | null {
-		console.log(id);
 		const doc = this.docs.get(id) as DocumentType;
-		console.log(doc);
-		return doc.reservedModelType === "HashTag" ? doc : null;
+		return doc?.reservedModelType === "HashTag" ? doc : null;
 	}
 }

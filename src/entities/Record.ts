@@ -42,7 +42,7 @@ type Photo = {
 	url: string;
 };
 
-export class Record extends Document {
+export class RecordEntry extends Document {
 	public note!: string;
 	public latitude!: number;
 	public accuracy!: number;
