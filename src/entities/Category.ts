@@ -9,8 +9,16 @@ export type CategoryProps = DocumentProps & {
 	envelopeId: number;
 	name: string;
 	position: number;
+	cardinality: CategoryCardinality;
 	reservedModelType: "Category";
 };
+
+enum CategoryCardinality {
+	NONE = 0,
+	MUST = 1,
+	NEED = 2,
+	WANT = 3,
+}
 
 export class Category extends Document {
 	public customCategory!: boolean;
