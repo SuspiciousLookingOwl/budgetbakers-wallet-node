@@ -82,13 +82,13 @@ export class Wallet {
 			this.rawDocs.set(row.key, rawDoc);
 			const Model = objectModels[rawDoc.reservedModelType] as unknown as typeof Document;
 
-			if (Model) {
-				const doc = new Model({
-					...rawDoc,
-					wallet: this,
-				});
-				this.docs.set(row.key, doc as DocumentType);
-			}
+			if (!Model) continue;
+
+			const doc = new Model({
+				...rawDoc,
+				wallet: this,
+			});
+			this.docs.set(row.key, doc as DocumentType);
 		}
 
 		for (const key of keysToDelete) {
