@@ -42,11 +42,16 @@ type Photo = {
 	url: string;
 };
 
+export enum RecordEntryType {
+	INCOME = 0,
+	EXPENSE = 1,
+}
+
 export class RecordEntry extends Document {
 	public note!: string;
 	public latitude!: number;
 	public accuracy!: number;
-	public type!: number;
+	public type!: RecordEntryType;
 	public photos!: Photo[];
 	public paymentType!: number;
 	public warrantyInMonth!: number;
