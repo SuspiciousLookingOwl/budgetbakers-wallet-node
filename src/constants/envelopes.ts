@@ -1,4 +1,4 @@
-export const envelopes = {
+export const ENVELOPES = {
 	"10": {
 		id: 10,
 		name: "FOOD_AND_DRINKS",
