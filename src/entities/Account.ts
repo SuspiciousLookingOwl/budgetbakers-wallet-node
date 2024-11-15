@@ -1,5 +1,6 @@
 import { Currency } from "./Currency";
 import { Document, DocumentProps } from "./Document";
+import { RecordEntryType } from "./Record";
 
 export type AccountProps = DocumentProps & {
 	color: string;
@@ -55,6 +56,14 @@ export class Account extends Document {
 		Object.assign(this, { ...props });
 		this.initAmount = this.initAmount / 100;
 		this.initRefAmount = this.initRefAmount / 100;
+	}
+
+	get balance(): number {
+		const records = this.wallet.records.filter((r) => r.accountId === this._id);
+		return records.reduce(
+			(acc, r) => acc + (r.type === RecordEntryType.EXPENSE ? -r.amount : r.amount),
+			this.initAmount,
+		);
 	}
 
 	get currency(): Currency {
