@@ -166,10 +166,11 @@ export class Wallet {
 		});
 
 		for (const envelope of envelopes) {
-			const children = envelopes.filter((e) => e.parentId === envelope.id);
-			if (children.length) {
-				envelope.children = children;
-			}
+			const children = envelopes
+				.filter((e) => e.parentId === envelope.id)
+				.sort((a, b) => (a.name.endsWith("OTHERS") ? -1 : a.name.localeCompare(b.name)));
+
+			if (children.length) envelope.children = children;
 		}
 
 		const customCategories = this.categories.filter((c) => c.customCategory);
@@ -190,6 +191,10 @@ export class Wallet {
 			if (!parent.children) parent.children = [];
 			parent.children.push(envelope);
 		}
+
+		envelopes
+			.filter((e) => e.parentId && e.children)
+			.forEach((e) => e.children?.sort((a, b) => a.name.localeCompare(b.name)));
 
 		return envelopes;
 	}
