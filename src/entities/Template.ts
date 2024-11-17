@@ -1,5 +1,7 @@
+import { PaymentType } from "../constants";
 import { Document, DocumentProps } from "./Document";
 import { HashTag } from "./HashTag";
+import { RecordEntryType } from "./Record";
 
 export type TemplateProps = DocumentProps & {
 	note: string;
@@ -18,9 +20,9 @@ export type TemplateProps = DocumentProps & {
 export class Template extends Document {
 	public note!: string;
 	public amount!: number;
-	public type!: number;
+	public type!: RecordEntryType;
 	public labelIds!: string[];
-	public paymentType!: number;
+	public paymentType!: PaymentType;
 	public accountId!: string;
 	public name!: string;
 	public position!: number;

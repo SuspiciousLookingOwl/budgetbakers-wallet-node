@@ -1,3 +1,4 @@
+import { PaymentType } from "../constants";
 import { Account } from "./Account";
 import { Category } from "./Category";
 import { Currency } from "./Currency";
@@ -25,10 +26,15 @@ export type RecordProps = DocumentProps & {
 	transferAccountId?: string;
 	categoryChanged: boolean;
 	categoryConfirmReason: number;
-	refObjects: unknown[];
+	refObjects: RefObject[];
 	categoryId: string;
 	reservedModelType: "Record";
 };
+
+type RefObject = {
+	id: string;
+	type: number;
+}
 
 type PhotoProps = {
 	backedInCloud: boolean;
@@ -53,7 +59,7 @@ export class RecordEntry extends Document {
 	public accuracy!: number;
 	public type!: RecordEntryType;
 	public photos!: Photo[];
-	public paymentType!: number;
+	public paymentType!: PaymentType;
 	public warrantyInMonth!: number;
 	public recordDate!: Date;
 	public currencyId!: string;
