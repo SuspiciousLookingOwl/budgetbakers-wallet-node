@@ -2,6 +2,7 @@ import { Account, AccountProps } from "./Account";
 import { Budget, BudgetProps } from "./Budget";
 import { Category, CategoryProps } from "./Category";
 import { Currency, CurrencyProps } from "./Currency";
+import { Debt, DebtProps } from "./Debt";
 import { HashTag, HashTagProps } from "./HashTag";
 import { RecordEntry, RecordProps } from "./Record";
 import { Template, TemplateProps } from "./Template";
@@ -23,7 +24,8 @@ export type DocumentType =
 	| Template
 	| RecordEntry
 	| HashTag
-	| Budget;
+	| Budget
+	| Debt;
 
 export type DocumentTypeProps =
 	| AccountProps
@@ -32,4 +34,5 @@ export type DocumentTypeProps =
 	| CurrencyProps
 	| TemplateProps
 	| RecordProps
-	| HashTagProps;
+	| HashTagProps
+	| DebtProps;

@@ -74,7 +74,7 @@ export class RecordEntry extends Document {
 	public transferAccountId?: string;
 	public categoryChanged!: boolean;
 	public categoryConfirmReason!: number;
-	public refObjects!: unknown[];
+	public refObjects!: RefObject[];
 	public categoryId!: string;
 	public reservedModelType = "Record" as const;
 

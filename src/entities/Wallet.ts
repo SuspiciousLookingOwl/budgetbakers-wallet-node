@@ -14,6 +14,7 @@ import {
 import { Client } from "../Client";
 import { ENVELOPES } from "../constants";
 import { IWalletGroup } from "../types";
+import { Debt } from "./Debt";
 import { Envelope } from "./Envelope";
 import { HashTag } from "./HashTag";
 
@@ -70,6 +71,7 @@ export class Wallet {
 			Budget,
 			Category,
 			Currency,
+			Debt,
 			Record: RecordEntry,
 			Template,
 			HashTag,
