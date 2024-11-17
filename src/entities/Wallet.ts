@@ -16,6 +16,7 @@ import { ENVELOPES } from "../constants";
 import { IWalletGroup } from "../types";
 import { Debt } from "./Debt";
 import { Envelope } from "./Envelope";
+import { Goal } from "./Goal";
 import { HashTag } from "./HashTag";
 
 export class Wallet {
@@ -72,6 +73,7 @@ export class Wallet {
 			Category,
 			Currency,
 			Debt,
+			Goal,
 			Record: RecordEntry,
 			Template,
 			HashTag,
@@ -140,6 +142,18 @@ export class Wallet {
 			(d) => d.reservedModelType === "Currency",
 		);
 		return currencies;
+	}
+
+	public getDebt(id: string): Debt | null {
+		const doc = this.docs.get(id) as DocumentType;
+		return doc?.reservedModelType === "Debt" ? doc : null;
+	}
+
+	public get debts(): Debt[] {
+		const debts = [...this.docs.values()].filter(
+			(d) => d.reservedModelType === "Debt",
+		);
+		return debts;
 	}
 
 	public getCategory(id: string): Category | null {
