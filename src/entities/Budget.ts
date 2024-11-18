@@ -2,7 +2,7 @@ import { Account } from "./Account";
 import { Category } from "./Category";
 import { Currency } from "./Currency";
 import { Document, DocumentProps } from "./Document";
-import { HashTag } from "./HashTag";
+import { Label } from "./Label";
 
 export type BudgetProps = DocumentProps & {
 	amount: number;
@@ -93,7 +93,7 @@ export class Budget extends Document {
 		return this.categoryIds.map((id) => this.wallet.getCategory(id)!);
 	}
 
-	public get labels(): HashTag[] {
-		return this.labelIds.map((id) => this.wallet.getHashTag(id)!);
+	public get labels(): Label[] {
+		return this.labelIds.map((id) => this.wallet.getLabel(id)!);
 	}
 }

@@ -3,7 +3,7 @@ import { Account } from "./Account";
 import { Category } from "./Category";
 import { Currency } from "./Currency";
 import { Document, DocumentProps } from "./Document";
-import { HashTag } from "./HashTag";
+import { Label } from "./Label";
 
 export type RecordProps = DocumentProps & {
 	note: string;
@@ -117,8 +117,8 @@ export class RecordEntry extends Document {
 		return this.wallet.getCategory(this.categoryId)!;
 	}
 
-	public get labels(): HashTag[] {
-		return this.labelIds.map((id) => this.wallet.getHashTag(id)!);
+	public get labels(): Label[] {
+		return this.labelIds.map((id) => this.wallet.getLabel(id)!);
 	}
 
 	public amountInCurrency(currency: Currency | string): number {

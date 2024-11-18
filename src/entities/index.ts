@@ -4,7 +4,7 @@ import { Category, CategoryProps } from "./Category";
 import { Currency, CurrencyProps } from "./Currency";
 import { Debt, DebtProps } from "./Debt";
 import { Goal, GoalProps } from "./Goal";
-import { HashTag, HashTagProps } from "./HashTag";
+import { Label, LabelProps } from "./Label";
 import { PlannedPayment, PlannedPaymentProps } from "./PlannedPayment";
 import { RecordEntry, RecordProps } from "./Record";
 import { ShoppingList, ShoppingListProps } from "./ShoppingList";
@@ -35,7 +35,7 @@ export type DocumentType =
 	| RecordEntry
 	| ShoppingList
 	| Template
-	| HashTag;
+	| Label;
 
 export type DocumentTypeProps =
 	| AccountProps
@@ -48,4 +48,4 @@ export type DocumentTypeProps =
 	| RecordProps
 	| ShoppingListProps
 	| TemplateProps
-	| HashTagProps;
+	| LabelProps;

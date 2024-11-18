@@ -1,6 +1,6 @@
 import { Document, DocumentProps } from "./Document";
 
-export type HashTagProps = DocumentProps & {
+export type LabelProps = DocumentProps & {
 	color: string;
 	archived: boolean;
 	autoAssign: boolean;
@@ -9,7 +9,7 @@ export type HashTagProps = DocumentProps & {
 	reservedModelType: "HashTag";
 };
 
-export class HashTag extends Document {
+export class Label extends Document {
 	public color!: string;
 	public archived!: boolean;
 	public autoAssign!: boolean;
@@ -17,7 +17,7 @@ export class HashTag extends Document {
 	public position!: number;
 	public reservedModelType = "HashTag" as const;
 
-	constructor(props: HashTagProps) {
+	constructor(props: LabelProps) {
 		super(props);
 		Object.assign(this, { ...props });
 	}

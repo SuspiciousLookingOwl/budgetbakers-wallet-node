@@ -1,7 +1,7 @@
 import { PaymentType } from "../constants";
 import { Account } from "./Account";
 import { Document, DocumentProps } from "./Document";
-import { HashTag } from "./HashTag";
+import { Label } from "./Label";
 import { RecordEntryType } from "./Record";
 
 export type PlannedPaymentProps = DocumentProps & {
@@ -83,8 +83,8 @@ export class PlannedPayment extends Document {
         return this.wallet.getAccount(this.accountId)!;
     }
 
-    public get labels(): HashTag[] {
-        return this.labelIds.map((id) => this.wallet.getHashTag(id)!);
+    public get labels(): Label[] {
+        return this.labelIds.map((id) => this.wallet.getLabel(id)!);
     }
 
     public get currency() {

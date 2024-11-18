@@ -1,6 +1,6 @@
 import { PaymentType } from "../constants";
 import { Document, DocumentProps } from "./Document";
-import { HashTag } from "./HashTag";
+import { Label } from "./Label";
 import { RecordEntryType } from "./Record";
 
 export type TemplateProps = DocumentProps & {
@@ -41,7 +41,7 @@ export class Template extends Document {
 		this.amount = props.amount / 100;
 	}
 
-	public get labels(): HashTag[] {
-		return this.labelIds.map((id) => this.wallet.getHashTag(id)!);
+	public get labels(): Label[] {
+		return this.labelIds.map((id) => this.wallet.getLabel(id)!);
 	}
 }
