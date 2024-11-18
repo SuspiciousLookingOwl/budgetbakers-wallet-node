@@ -54,6 +54,12 @@ export enum RecordEntryType {
 	EXPENSE = 1,
 }
 
+export enum RecordEntryState {
+	RECONCILED = 0,
+	CLEARED = 1,
+	UNCLEARED = 2,
+}
+
 export class RecordEntry extends Document {
 	public note!: string;
 	public latitude!: number;
@@ -64,7 +70,7 @@ export class RecordEntry extends Document {
 	public warrantyInMonth!: number;
 	public recordDate!: Date;
 	public currencyId!: string;
-	public recordState!: number;
+	public recordState!: RecordEntryState;
 	public longitude!: number;
 	public refAmount!: number;
 	public amount!: number;
