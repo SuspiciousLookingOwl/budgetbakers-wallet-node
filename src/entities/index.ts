@@ -5,6 +5,7 @@ import { Currency, CurrencyProps } from "./Currency";
 import { Debt, DebtProps } from "./Debt";
 import { Goal, GoalProps } from "./Goal";
 import { HashTag, HashTagProps } from "./HashTag";
+import { PlannedPayment, PlannedPaymentProps } from "./PlannedPayment";
 import { RecordEntry, RecordProps } from "./Record";
 import { Template, TemplateProps } from "./Template";
 
@@ -27,6 +28,7 @@ export type DocumentType =
 	| Currency
 	| Debt
 	| Goal
+	| PlannedPayment
 	| Template
 	| RecordEntry
 	| HashTag;
@@ -38,6 +40,7 @@ export type DocumentTypeProps =
 	| CurrencyProps
 	| DebtProps
 	| GoalProps
+	| PlannedPaymentProps
 	| TemplateProps
 	| RecordProps
 	| HashTagProps;

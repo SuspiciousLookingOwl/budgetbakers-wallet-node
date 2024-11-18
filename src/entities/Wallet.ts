@@ -18,6 +18,7 @@ import { Debt } from "./Debt";
 import { Envelope } from "./Envelope";
 import { Goal } from "./Goal";
 import { HashTag } from "./HashTag";
+import { PlannedPayment } from "./PlannedPayment";
 
 export class Wallet {
 	public id: string;
@@ -74,6 +75,7 @@ export class Wallet {
 			Currency,
 			Debt,
 			Goal,
+			StandingOrder: PlannedPayment,
 			Record: RecordEntry,
 			Template,
 			HashTag,
