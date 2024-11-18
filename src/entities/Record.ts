@@ -28,6 +28,7 @@ export type RecordProps = DocumentProps & {
 	categoryConfirmReason: number;
 	refObjects: RefObject[];
 	categoryId: string;
+	payee?: string;
 	reservedModelType: "Record";
 };
 
@@ -76,6 +77,7 @@ export class RecordEntry extends Document {
 	public categoryConfirmReason!: number;
 	public refObjects!: RefObject[];
 	public categoryId!: string;
+	public payee?: string;
 	public reservedModelType = "Record" as const;
 
 	constructor(props: RecordProps) {

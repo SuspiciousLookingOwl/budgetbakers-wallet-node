@@ -14,6 +14,7 @@ export type TemplateProps = DocumentProps & {
 	position: number;
 	currencyId: string;
 	categoryId: string;
+	payee?: string;
 	reservedModelType: "Template";
 };
 
@@ -28,6 +29,7 @@ export class Template extends Document {
 	public position!: number;
 	public currencyId!: string;
 	public categoryId!: string;
+	public payee?: string;
 	public reservedModelType = "Template" as const;
 
 	constructor(props: TemplateProps) {
