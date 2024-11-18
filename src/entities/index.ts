@@ -7,6 +7,7 @@ import { Goal, GoalProps } from "./Goal";
 import { HashTag, HashTagProps } from "./HashTag";
 import { PlannedPayment, PlannedPaymentProps } from "./PlannedPayment";
 import { RecordEntry, RecordProps } from "./Record";
+import { ShoppingList, ShoppingListProps } from "./ShoppingList";
 import { Template, TemplateProps } from "./Template";
 
 export * from "./Account";
@@ -17,7 +18,9 @@ export * from "./Debt";
 export * from "./Document";
 export * from "./Envelope";
 export * from "./Goal";
+export * from "./PlannedPayment";
 export * from "./Record";
+export * from "./ShoppingList";
 export * from "./Template";
 export * from "./Wallet";
 
@@ -29,8 +32,9 @@ export type DocumentType =
 	| Debt
 	| Goal
 	| PlannedPayment
-	| Template
 	| RecordEntry
+	| ShoppingList
+	| Template
 	| HashTag;
 
 export type DocumentTypeProps =
@@ -41,6 +45,7 @@ export type DocumentTypeProps =
 	| DebtProps
 	| GoalProps
 	| PlannedPaymentProps
-	| TemplateProps
 	| RecordProps
+	| ShoppingListProps
+	| TemplateProps
 	| HashTagProps;

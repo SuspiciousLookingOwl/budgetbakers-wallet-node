@@ -9,6 +9,7 @@ import {
 	DocumentType,
 	DocumentTypeProps,
 	RecordEntry,
+	ShoppingList,
 	Template,
 } from ".";
 import { Client } from "../Client";
@@ -77,6 +78,7 @@ export class Wallet {
 			Goal,
 			StandingOrder: PlannedPayment,
 			Record: RecordEntry,
+			ShoppingList,
 			Template,
 			HashTag,
 		} as const;
