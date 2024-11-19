@@ -1,4 +1,6 @@
+import EventEmitter from "events";
 import nano, { DocumentScope, ServerScope } from "nano";
+import TypedEmitter from "typed-emitter";
 
 import {
     Account,
@@ -21,7 +23,12 @@ import { Goal } from "./Goal";
 import { Label } from "./Label";
 import { PlannedPayment } from "./PlannedPayment";
 
-export class Wallet {
+type WalletEvents = {
+    docsFetched: (documents: DocumentType[]) => void;
+    docsDeleted: (ids: string[]) => void;
+};
+
+export class Wallet extends (EventEmitter as new () => TypedEmitter<WalletEvents>) {
     public id: string;
     private client: Client;
     private active = false;
@@ -32,6 +39,7 @@ export class Wallet {
     private db: DocumentScope<unknown>;
 
     constructor(client: Client, { id, database }: IWalletGroup) {
+        super();
         this.id = id;
         this.client = client;
 
@@ -83,6 +91,9 @@ export class Wallet {
             HashTag: Label,
         } as const;
 
+        const newDocs: DocumentType[] = [];
+        const deletedDocs: string[] = [];
+
         for (const row of rows) {
             if ("error" in row || !row.doc || !("reservedModelType" in row.doc)) continue; // not a valid document
 
@@ -97,12 +108,17 @@ export class Wallet {
                 wallet: this,
             });
             this.docs.set(row.key, doc as DocumentType);
+            newDocs.push(doc as DocumentType);
         }
 
         for (const key of keysToDelete) {
             this.rawDocs.delete(key);
             this.docs.delete(key);
+            deletedDocs.push(key);
         }
+
+        this.emit("docsFetched", newDocs);
+        this.emit("docsDeleted", deletedDocs);
     }
 
     public async startPolling() {
